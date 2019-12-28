@@ -1,0 +1,25 @@
+version: '3.0'
+services:
+  frontend:
+    build: frontend
+    networks:
+      - external
+  backend:
+    build: backend
+    networks:
+      - internal
+  proxy:
+    build: proxy
+    depends_on:
+      - frontend
+      - backend
+    networks:
+      - internal
+      - external
+    ports:
+      - "80:80"
+networks:
+  internal:
+    driver: bridge
+  external:
+    driver: bridge
